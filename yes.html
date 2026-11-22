@@ -4,386 +4,442 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Just deeper about me </title>
+<title>Just deeper about me</title>
+
+<!--
+✧ PROGRAMMER'S NOTE ✧
+
+TO EDIT YOUR BOOK:
+Press CTRL + F and search for:
+const bookContent
+
+Your writing goes directly below.
+You do NOT need to edit the animation code!
+
+Stay whimsical. ♡
+-->
 
 <style>
 :root {
-  --dark: #100e12;
-  --card: #1c1920;
-  --inner: #25212a;
-  --beige: #d8c8ad;
-  --cream: #f5efe6;
-  --lavender: #b9a4ce;
-  --purple: #5d516b;
-  --grey: #706b64;
-  --cover: #9a87a8;
+  --dark:#100e12;
+  --card:#1c1920;
+  --inner:#25212a;
+  --beige:#d8c8ad;
+  --cream:#f5efe6;
+  --lavender:#b9a4ce;
+  --purple:#5d516b;
+  --grey:#706b64;
+  --cover:#9a87a8;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing:border-box; }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  padding: 30px 16px;
-  background: var(--dark);
-  color: var(--cream);
-  font-family: MV Boli; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin:0;
+  min-height:100vh;
+  padding:30px 16px;
+  background:var(--dark);
+  color:var(--cream);
+  font-family:"MV Boli",cursive;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
 h1 {
-  color: var(--lavender);
-  letter-spacing: 3px;
-  font-size: 24px;
-  margin-bottom: 35px;
+  color:var(--lavender);
+  letter-spacing:3px;
+  font-size:24px;
+  margin-bottom:35px;
+  text-align:center;
 }
 
 .book-area {
-  width: min(760px, 94vw);
-  perspective: 1800px;
+  width:min(760px,94vw);
+  perspective:1800px;
 }
 
 .book {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1.52 / 1;
+  position:relative;
+  width:100%;
+  aspect-ratio:1.52 / 1;
 }
 
 .frame {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  border: 2px solid var(--beige);
-  border-radius: 5px;
-  background: var(--cream);
-  box-shadow: 0 18px 45px #0008;
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  border:2px solid var(--beige);
+  border-radius:5px;
+  background:var(--cream);
+  box-shadow:0 18px 45px #0008;
 }
 
-/* Inside spread */
-
 .spread {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  z-index: 3;
-  background: transparent;
+  position:absolute;
+  inset:0;
+  display:flex;
+  z-index:3;
 }
 
 .page {
-  width: 50%;
-  height: 100%;
-  padding: clamp(15px, 4vw, 35px);
-  overflow: hidden;
-  background: var(--cream);
-  color: var(--purple);
+  width:50%;
+  height:100%;
+  padding:clamp(15px,4vw,35px);
+  overflow:hidden;
+  background:var(--cream);
+  color:var(--purple);
 }
 
-.page.left {
-  border-right: 1px solid var(--beige);
-}
-
-.page.right {
-  border-left: 1px solid var(--beige);
-}
+.page.left { border-right:1px solid var(--beige); }
+.page.right { border-left:1px solid var(--beige); }
 
 .page h2,
 .sheet-face h2 {
-  color: var(--purple);
-  font-size: clamp(17px, 3vw, 25px);
-  margin-top: 0;
+  color:var(--purple);
+  font-size:clamp(17px,3vw,25px);
+  margin-top:0;
 }
 
 .page p,
 .sheet-face p {
-  color: var(--grey);
-  font-size: clamp(12px, 2vw, 16px);
-  line-height: 1.7;
+  color:var(--grey);
+  font-size:clamp(12px,2vw,16px);
+  line-height:1.7;
+  overflow-wrap:anywhere;
 }
 
-/* Closed book backing */
+.page-content {
+  overflow:hidden;
+  height:100%;
+}
 
 .closed-left {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background: var(--inner);
-  z-index: 5;
+  position:absolute;
+  top:0;
+  left:0;
+  width:50%;
+  height:100%;
+  background:var(--inner);
+  z-index:5;
 }
-
-/* Front cover */
 
 .front-cover {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50%;
-  height: 100%;
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  transition: transform 1.4s cubic-bezier(.65, 0, .25, 1);
-  z-index: 10;
+  position:absolute;
+  top:0;
+  left:50%;
+  width:50%;
+  height:100%;
+  transform-origin:left center;
+  transform-style:preserve-3d;
+  transition:transform 1.4s cubic-bezier(.65,0,.25,1);
+  z-index:10;
 }
 
-.front-cover.open {
-  transform: rotateY(-180deg);
-}
+.front-cover.open { transform:rotateY(-180deg); }
 
 .cover-face {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-  border: 1px solid var(--beige);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+  border:1px solid var(--beige);
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
 }
 
 .cover-front {
-  background: var(--cover);
-  color: var(--beige);
-  overflow: hidden;
-  isolation: isolate;
+  background:var(--cover);
+  color:var(--beige);
+  overflow:hidden;
+  isolation:isolate;
 }
 
-.cover-front::before {
-  content: "✧  ✿  ✧";
-  position: absolute;
-  inset: 15px 12px;
-  border: 1px solid #d8c8ad99;
-  outline: 1px solid #b9a4ce55;
-  outline-offset: -7px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 16px;
-  color: var(--lavender);
-  font-size: clamp(13px, 2.3vw, 20px);
-  letter-spacing: 9px;
-  pointer-events: none;
-  z-index: -1;
+.cover-front::before,
+.back-cover::before {
+  content:"✧  ✿  ✧";
+  position:absolute;
+  inset:15px 12px;
+  border:1px solid #d8c8ad99;
+  outline:1px solid #b9a4ce55;
+  outline-offset:-7px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:16px;
+  color:var(--lavender);
+  font-size:clamp(13px,2.3vw,20px);
+  letter-spacing:9px;
+  pointer-events:none;
+  z-index:-1;
 }
 
-.cover-front::after {
-  content: "☾";
-  position: absolute;
-  top: 21%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--beige);
-  font-size: clamp(42px, 7vw, 68px);
-  line-height: 1;
-  text-shadow: 0 0 12px #d8c8ad88, 0 0 28px #b9a4ce77;
-  pointer-events: none;
+.cover-front::after,
+.back-cover::after {
+  content:"☾";
+  position:absolute;
+  top:21%;
+  left:50%;
+  transform:translateX(-50%);
+  color:var(--beige);
+  font-size:clamp(42px,7vw,68px);
+  line-height:1;
+  text-shadow:0 0 12px #d8c8ad88,0 0 28px #b9a4ce77;
+  pointer-events:none;
 }
 
 .cover-front h2 {
-  position: relative;
-  margin: 65px 0 8px;
-  font-size: clamp(17px, 3.5vw, 29px);
-  letter-spacing: 2px;
-  line-height: 1.35;
-  text-shadow: 0 2px 12px #0009;
+  position:relative;
+  margin:65px 0 8px;
+  font-size:clamp(17px,3.5vw,29px);
+  letter-spacing:2px;
+  line-height:1.35;
+  text-shadow:0 2px 12px #0009;
 }
 
 .cover-front p {
-  position: relative;
-  color: var(--lavender);
-  font-size: clamp(10px, 1.8vw, 13px);
-  letter-spacing: 3px;
+  position:relative;
+  color:var(--lavender);
+  font-size:clamp(10px,1.8vw,13px);
+  letter-spacing:3px;
 }
 
 .cover-inside {
-  background: var(--cream);
-  color: var(--purple);
-  transform: rotateY(180deg);
+  background:var(--cream);
+  color:var(--purple);
+  transform:rotateY(180deg);
+  overflow:hidden;
 }
 
-.cover-inside h2 {
-  color: var(--purple);
-}
+.cover-inside h2 { color:var(--purple); }
 
 .cover-inside p {
-  color: var(--grey);
-  line-height: 1.7;
-  font-size: clamp(12px, 2vw, 15px);
+  color:var(--grey);
+  line-height:1.7;
+  font-size:clamp(12px,2vw,15px);
 }
 
-/* Turning sheet */
+.cover-inside .page-one-content {
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
 
 .sheet {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50%;
-  height: 100%;
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  display: none;
-  z-index: 7;
+  position:absolute;
+  top:0;
+  left:50%;
+  width:50%;
+  height:100%;
+  transform-origin:left center;
+  transform-style:preserve-3d;
+  display:none;
+  z-index:7;
 }
 
 .sheet.forward {
-  display: block;
-  animation: forward 1.15s cubic-bezier(.65, 0, .25, 1) forwards;
+  display:block;
+  animation:forward 1.15s cubic-bezier(.65,0,.25,1) forwards;
 }
 
 .sheet.backward {
-  display: block;
-  animation: backward 1.15s cubic-bezier(.65, 0, .25, 1) forwards;
+  display:block;
+  animation:backward 1.15s cubic-bezier(.65,0,.25,1) forwards;
 }
 
 .sheet-face {
-  position: absolute;
-  inset: 0;
-  padding: clamp(15px, 4vw, 35px);
-  background: var(--cream);
-  color: var(--purple);
-  overflow: hidden;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border-left: 1px solid var(--beige);
+  position:absolute;
+  inset:0;
+  padding:clamp(15px,4vw,35px);
+  background:var(--cream);
+  color:var(--purple);
+  overflow:hidden;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  border-left:1px solid var(--beige);
 }
 
-.sheet-back {
-  transform: rotateY(180deg);
-}
+.sheet-back { transform:rotateY(180deg); }
 
 @keyframes forward {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(-180deg); }
+  from { transform:rotateY(0deg); }
+  to { transform:rotateY(-180deg); }
 }
 
 @keyframes backward {
-  from { transform: rotateY(-180deg); }
-  to { transform: rotateY(0deg); }
+  from { transform:rotateY(-180deg); }
+  to { transform:rotateY(0deg); }
 }
 
-/* Animated back cover */
-
 .back-cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  visibility: hidden;
-  transform-origin: right center;
-  transform: rotateY(-180deg);
+  position:absolute;
+  top:0;
+  left:0;
+  width:50%;
+  height:100%;
+  visibility:hidden;
+  transform-origin:right center;
+  transform:rotateY(-180deg);
   transition:
-    transform 1.15s cubic-bezier(.65, 0, .25, 1),
+    transform 1.15s cubic-bezier(.65,0,.25,1),
     visibility 0s linear 1.15s;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-  color: var(--beige);
-  border: 1px solid var(--beige);
-  z-index: 12;
-  background: var(--cover);
-  overflow: hidden;
-  isolation: isolate;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+  color:var(--beige);
+  border:1px solid var(--beige);
+  z-index:12;
+  background:var(--cover);
+  overflow:hidden;
+  isolation:isolate;
 }
 
 .back-cover.visible {
-  visibility: visible;
-  transform: rotateY(0deg);
+  visibility:visible;
+  transform:rotateY(0deg);
   transition:
-    transform 1.15s cubic-bezier(.65, 0, .25, 1),
+    transform 1.15s cubic-bezier(.65,0,.25,1),
     visibility 0s;
 }
 
-.back-cover::before {
-  content: "✧  ✿  ✧";
-  position: absolute;
-  inset: 15px 12px;
-  border: 1px solid #d8c8ad99;
-  outline: 1px solid #b9a4ce55;
-  outline-offset: -7px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 16px;
-  color: var(--lavender);
-  font-size: clamp(13px, 2.3vw, 20px);
-  letter-spacing: 9px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.back-cover::after {
-  content: "☾";
-  position: absolute;
-  top: 21%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--beige);
-  font-size: clamp(42px, 7vw, 68px);
-  text-shadow: 0 0 12px #d8c8ad88, 0 0 28px #b9a4ce77;
-  pointer-events: none;
-}
-
 .back-cover h2 {
-  position: relative;
-  margin-top: 65px;
-  letter-spacing: 3px;
-  text-shadow: 0 2px 12px #0009;
+  position:relative;
+  margin-top:65px;
+  letter-spacing:3px;
+  text-shadow:0 2px 12px #0009;
 }
 
 .back-cover p {
-  position: relative;
-  color: var(--lavender);
-  letter-spacing: 1px;
+  position:relative;
+  color:var(--lavender);
+  letter-spacing:1px;
 }
 
-/* Controls */
-
 .controls {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-top: 30px;
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:30px;
 }
 
 button {
-  background: var(--inner);
-  color: var(--beige);
-  border: 1px solid var(--beige);
-  border-radius: 5px;
-  padding: 11px 25px;
-  font-family: MV Boli; 
-  font-size: 14px;
-  cursor: pointer;
+  background:var(--inner);
+  color:var(--beige);
+  border:1px solid var(--beige);
+  border-radius:5px;
+  padding:11px 25px;
+  font-family:"MV Boli",cursive;
+  font-size:14px;
+  cursor:pointer;
 }
 
 button:hover:not(:disabled) {
-  background: var(--beige);
-  color: var(--dark);
+  background:var(--beige);
+  color:var(--dark);
 }
 
 button:disabled {
-  opacity: .35;
-  cursor: not-allowed;
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+/* ✧ MESSAGE BOX ✧ */
+
+.message-box {
+  width:min(420px,90vw);
+  margin-top:25px;
+  text-align:center;
+}
+
+.message-box textarea {
+  display:block;
+  width:100%;
+  min-height:85px;
+  resize:vertical;
+  padding:12px;
+  background:var(--inner);
+  color:var(--cream);
+  border:1px solid var(--beige);
+  border-radius:6px;
+  font-family:"MV Boli",cursive;
+  font-size:13px;
+  outline:none;
+}
+
+.message-box textarea::placeholder {
+  color:var(--grey);
+}
+
+.message-box textarea:focus {
+  border-color:var(--lavender);
+  box-shadow:0 0 12px #b9a4ce33;
+}
+
+.message-box button {
+  margin-top:10px;
+}
+
+.message-animation {
+  min-height:35px;
+  margin-top:12px;
+  color:var(--lavender);
+  opacity:0;
+  pointer-events:none;
+}
+
+.message-animation.play {
+  animation:sendAway 2s ease forwards;
+}
+
+@keyframes sendAway {
+  0% {
+    opacity:0;
+    transform:translateY(10px) scale(.8);
+  }
+  25% {
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+  75% {
+    opacity:1;
+    transform:translateY(-20px) scale(1.05);
+  }
+  100% {
+    opacity:0;
+    transform:translateY(-55px) scale(.7);
+  }
 }
 
 #status {
-  color: var(--grey);
-  font-size: 12px;
-  margin-top: 17px;
-  letter-spacing: 1px;
+  color:var(--grey);
+  font-size:12px;
+  margin-top:17px;
+  letter-spacing:1px;
+}
+
+#measure {
+  position:fixed;
+  left:-10000px;
+  top:0;
+  visibility:hidden;
+  pointer-events:none;
+  height:auto;
+}
+
+@media (max-width:500px) {
+  body { padding:20px 10px; }
+  h1 { font-size:18px; }
 }
 </style>
 </head>
@@ -394,11 +450,15 @@ button:disabled {
 
 <div class="book-area">
   <div class="book">
-    <div class="frame">
+    <div class="frame" id="frame">
 
       <div class="spread" id="spread">
-        <div class="page left" id="leftPage"></div>
-        <div class="page right" id="rightPage"></div>
+        <div class="page left" id="leftPage">
+          <div class="page-content" id="leftContent"></div>
+        </div>
+        <div class="page right" id="rightPage">
+          <div class="page-content" id="rightContent"></div>
+        </div>
       </div>
 
       <div class="closed-left" id="closedLeft"></div>
@@ -410,12 +470,7 @@ button:disabled {
         </div>
 
         <div class="cover-face cover-inside">
-          <h2>PAGE ONE</h2>
-          <p>
-            This is the permanent inside-left cover.
-            It stays attached to the front cover.
-          </p>
-          <p>✧ ☾ ✧</p>
+          <div class="page-one-content" id="pageOne"></div>
         </div>
       </div>
 
@@ -438,109 +493,295 @@ button:disabled {
   <button id="nextBtn">Open Book →</button>
 </div>
 
+<!-- ✧ MESSAGE BOX, DIRECTLY UNDER THE PAGE BUTTONS ✧ -->
+<div class="message-box">
+  <textarea
+    id="moonMessage"
+    placeholder="Vent over here, nothing gets saved, if you want a person to vent to check my socials on my first page... ☾"
+    aria-label="Write a temporary message"
+  ></textarea>
+
+  <button id="sendMessage" type="button">
+    SEND INTO THE VOID ✧
+  </button>
+
+  <div class="message-animation" id="messageAnimation" aria-live="polite">
+    ✧ Your words have become stardust ✧
+  </div>
+</div>
+
 <div id="status">CLOSED</div>
+<div id="measure"></div>
 
 <script>
-/*
-  PAGE ONE IS THE INSIDE OF THE FRONT COVER.
 
-  Normal pages begin at Page Two.
+/* =====================================
+   WRITE YOUR BOOK CONTENT HERE!
+   Search for const bookContent.
+   Long content automatically continues.
+===================================== */
 
-  Physical sheets:
-  Sheet 1: Page Two / Page Three
-  Sheet 2: Page Four / Page Five
-  Sheet 3: Page Six / Page Seven
-*/
-
-const pages = {
-  2: {
-    title: "PAGE TWO",
-    text: "The first actual page. This begins on the right."
+const bookContent = [
+  {
+    title: "Index",
+    text: ``
   },
-  3: {
-    title: "PAGE THREE",
-    text: "The back of Page Two. It lands on the left."
+  {
+    title: "TRIGGER WARNINGS BC PPL NEED EMMM",
+    text: `-rape<br>
+-s\\h<br>
+-gore<br>
+-blades<br>
+- abuse (maybe idk what counts)<br>
+<small> i hope my parents never find about this place</small>`
   },
-  4: {
-    title: "PAGE FOUR",
-    text: "This page is underneath Page Two on the right."
+  {
+    title: "Intro",
+    text: `so this is just a digital diary open to the public- ig u found the password so good job, this is mostly a space for me to vent, if you wanna vent theres a textbox below. Honestly I dont get the point of venting to anyone i know irl bc <br>-they will brush it off<br>-they have their own thing going on<br>-their just not intrested<br> so yea this is why i created this space from my main page, the whole reason this is locked by a hidden moon button and password is bc- I DONT WANT MY PARENTS FINDING OUT, because then id be cooked, this digital diary has lots of stuff i dont wanna share to them, i have like a huge letter containing smaller letters like a diary but i am afraid someone might take it so yea were here now.`
   },
-  5: {
-    title: "PAGE FIVE",
-    text: "The back of Page Four."
-  },
-  6: {
-    title: "PAGE SIX",
-    text: "Another page in the book."
-  },
-  7: {
-    title: "PAGE SEVEN",
-    text: "The final page in this example."
+ {
+    title: "Questions about trauma",
+    text: `Ok, From the trigger warnings you MIGHT think 'oh wow this girl has been trough alot' (aka shes traumatized), id say im not, (maybe i am but i like to belive im not)`
   }
-};
 
-const lastPage = Math.max(...Object.keys(pages).map(Number));
-const totalTurns = Math.ceil((lastPage - 1) / 2);
+];
+/* =====================================
+   AUTOMATIC PAGE GENERATION
+===================================== */
 
-let opened = false;
-let turn = 0;
-let animating = false;
-let showingBack = false;
 
+/* =====================================
+   AUTOMATIC PAGE GENERATION
+   + AUTOMATIC INDEX
+===================================== */
+
+const frame = document.getElementById("frame");
+const spread = document.getElementById("spread");
 const frontCover = document.getElementById("frontCover");
 const closedLeft = document.getElementById("closedLeft");
+const pageOne = document.getElementById("pageOne");
 const leftPage = document.getElementById("leftPage");
-const rightPage = document.getElementById("rightPage");
+const leftContent = document.getElementById("leftContent");
+const rightContent = document.getElementById("rightContent");
 const sheet = document.getElementById("sheet");
 const sheetFront = document.getElementById("sheetFront");
 const sheetBack = document.getElementById("sheetBack");
 const backCover = document.getElementById("backCover");
-const spread = document.getElementById("spread");
 
 const nextBtn = document.getElementById("nextBtn");
 const prevBtn = document.getElementById("prevBtn");
 const status = document.getElementById("status");
+const measure = document.getElementById("measure");
 
-function pageHTML(number) {
-  const page = pages[number];
+const moonMessage = document.getElementById("moonMessage");
+const sendMessage = document.getElementById("sendMessage");
+const messageAnimation = document.getElementById("messageAnimation");
 
-  if (!page) return "";
+let pages = [];
+let turn = 0;
+let opened = false;
+let animating = false;
+let showingBack = false;
 
+function makePageHTML(title, content, headingSize) {
   return `
-    <h2>${page.title}</h2>
-    <p>${page.text}</p>
+    ${title ? `<h2 style="font-size:${headingSize}px">${title}</h2>` : ""}
+    ${content}
   `;
 }
 
-/*
-  turn 0:
-  Page One cover | Page Two
+function escapeHTML(text) {
+  return String(text).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
+}
 
-  turn 1:
-  Page Three | Page Four
+function splitIntoPages() {
+  const book = document.querySelector(".book");
+  const bookWidth = book.clientWidth;
+  const pageWidth = bookWidth / 2;
+  const pagePadding = Math.min(35, Math.max(15, bookWidth * 0.04));
+  const contentWidth = pageWidth - pagePadding * 2;
+  const contentHeight = book.clientHeight - pagePadding * 2;
+  const fontSize = Math.max(12, Math.min(16, bookWidth * 0.021));
+  const headingSize = Math.max(17, Math.min(25, bookWidth * 0.033));
 
-  turn 2:
-  Page Five | Page Six
+  measure.style.width = contentWidth + "px";
+  measure.style.padding = "0";
+  measure.style.fontFamily = getComputedStyle(document.body).fontFamily;
+  measure.style.fontSize = fontSize + "px";
+  measure.style.lineHeight = "1.7";
 
-  turn 3:
-  Page Seven | Blank
-*/
+  function fits(html) {
+    measure.innerHTML = html;
+    return measure.scrollHeight <= contentHeight;
+  }
+
+  function buildEntryPages(title, text, chapterTitle) {
+    const result = [];
+    const words = text.trim().split(/\s+/);
+    let current = "";
+    let currentTitle = title;
+
+    function addPage(html, heading) {
+      result.push({
+        title: heading,
+        chapterTitle,
+        html: makePageHTML(heading, html, headingSize)
+      });
+    }
+
+    for (const word of words) {
+      const candidate = current ? current + " " + word : word;
+      const html = `<p>${candidate}</p>`;
+      const full = makePageHTML(currentTitle, html, headingSize);
+
+      if (fits(full)) {
+        current = candidate;
+      } else {
+        if (current) {
+          addPage(`<p>${current}</p>`, currentTitle);
+          currentTitle = "";
+        }
+
+        current = word;
+      }
+    }
+
+    if (current) {
+      addPage(`<p>${current}</p>`, currentTitle);
+    }
+
+    if (result.length === 0) {
+      addPage("", title);
+    }
+
+    return result;
+  }
+
+  // Build all normal chapters first.
+  const normalPages = [];
+  const indexPosition = bookContent.findIndex(
+    entry => entry.title.trim().toLowerCase() === "index"
+  );
+
+  let insertionPoint = 0;
+
+  bookContent.forEach((entry, i) => {
+    if (i === indexPosition) {
+      insertionPoint = normalPages.length;
+      return;
+    }
+
+    const chapterPages = buildEntryPages(
+      entry.title,
+      entry.text,
+      entry.title
+    );
+
+    normalPages.push(...chapterPages);
+  });
+
+  if (indexPosition === -1) {
+    insertionPoint = normalPages.length;
+  }
+
+  // Generate the index and calculate its page count.
+  let indexPages = [];
+  let indexPageCount = 1;
+
+  for (let attempt = 0; attempt < 10; attempt++) {
+    const chapterStarts = new Map();
+
+    normalPages.forEach((page, i) => {
+      if (!chapterStarts.has(page.chapterTitle)) {
+        const finalIndex = i >= insertionPoint
+          ? i + indexPageCount
+          : i;
+
+        chapterStarts.set(page.chapterTitle, finalIndex);
+      }
+    });
+
+    const indexText = [...chapterStarts.entries()]
+      .map(([title, pageIndex]) => {
+        const spreadNumber = Math.floor(pageIndex / 2) + 1;
+
+        return `✧ ${escapeHTML(title)} · Spread ${spreadNumber}`;
+      })
+      .join(" <br> ");
+
+    const newIndexPages = buildEntryPages(
+      "Index",
+      indexText,
+      "Index"
+    );
+
+    indexPages = newIndexPages;
+
+    if (newIndexPages.length === indexPageCount) {
+      break;
+    }
+
+    indexPageCount = newIndexPages.length;
+  }
+
+  // Insert the automatically generated index.
+  const allPages = [...normalPages];
+
+  allPages.splice(
+    insertionPoint,
+    0,
+    ...indexPages
+  );
+
+  // Page One stays attached to the inside of the front cover.
+  pageOne.innerHTML = allPages.shift()?.html || "";
+
+  pages = allPages;
+
+  if (pages.length === 0) {
+    pages.push({ title: "", html: "", chapterTitle: "" });
+  }
+
+  // Keep the final spread balanced.
+  if (pages.length % 2 !== 0) {
+    pages.push({
+      title: "",
+      html: "",
+      chapterTitle: ""
+    });
+  }
+
+  turn = 0;
+  renderSpread();
+  updateControls();
+}
 
 function renderSpread() {
   if (turn === 0) {
-    leftPage.innerHTML = "";
-
-    // Transparent so the inside cover's Page One shows.
+    leftContent.innerHTML = "";
     leftPage.style.background = "transparent";
+    leftPage.style.border = "none";
+    rightContent.innerHTML = pages[0]?.html || "";
   } else {
-    const leftNumber = turn * 2 + 1;
+    const leftIndex = turn * 2 - 1;
+    const rightIndex = turn * 2;
 
-    leftPage.innerHTML = pageHTML(leftNumber);
     leftPage.style.background = "var(--cream)";
-  }
+    leftPage.style.borderRight = "1px solid var(--beige)";
 
-  const rightNumber = turn * 2 + 2;
-  rightPage.innerHTML = pageHTML(rightNumber);
+    leftContent.innerHTML = pages[leftIndex]?.html || "";
+    rightContent.innerHTML = pages[rightIndex]?.html || "";
+  }
+}
+
+function totalTurns() {
+  return Math.ceil(pages.length / 2);
 }
 
 function updateControls() {
@@ -560,11 +801,21 @@ function updateControls() {
     return;
   }
 
-  nextBtn.textContent = turn >= totalTurns
+  nextBtn.textContent = turn >= totalTurns()
     ? "Back Cover →"
     : "Next Page →";
 
   status.textContent = `SPREAD ${turn + 1}`;
+}
+
+function waitForTransition(element, property, callback) {
+  const handler = event => {
+    if (event.target !== element || event.propertyName !== property) return;
+    element.removeEventListener("transitionend", handler);
+    callback();
+  };
+
+  element.addEventListener("transitionend", handler);
 }
 
 function openBook() {
@@ -575,18 +826,11 @@ function openBook() {
 
   frontCover.classList.add("open");
 
-  frontCover.addEventListener("transitionend", function done(event) {
-    if (event.propertyName !== "transform") return;
-
-    frontCover.removeEventListener("transitionend", done);
-
+  waitForTransition(frontCover, "transform", () => {
     opened = true;
-
     frontCover.style.zIndex = "2";
     closedLeft.style.display = "none";
-
     renderSpread();
-
     animating = false;
     updateControls();
   });
@@ -595,20 +839,14 @@ function openBook() {
 function turnPage() {
   if (animating || !opened || showingBack) return;
 
-  if (turn >= totalTurns) {
+  if (turn >= totalTurns()) {
     showingBack = true;
     animating = true;
-
     spread.style.display = "none";
-    document.querySelector(".frame").style.background = "var(--inner)";
-
+    frame.style.background = "var(--inner)";
     backCover.classList.add("visible");
 
-    backCover.addEventListener("transitionend", function done(event) {
-      if (event.propertyName !== "transform") return;
-
-      backCover.removeEventListener("transitionend", done);
-
+    waitForTransition(backCover, "transform", () => {
       animating = false;
       updateControls();
     });
@@ -620,18 +858,17 @@ function turnPage() {
   animating = true;
   updateControls();
 
-  const frontNumber = turn * 2 + 2;
-  const backNumber = frontNumber + 1;
+  const frontIndex = turn * 2;
+  const backIndex = frontIndex + 1;
 
-  sheetFront.innerHTML = pageHTML(frontNumber);
-  sheetBack.innerHTML = pageHTML(backNumber);
+  sheetFront.innerHTML = pages[frontIndex]?.html || "";
+  sheetBack.innerHTML = pages[backIndex]?.html || "";
 
   sheet.classList.remove("forward", "backward");
   sheet.style.display = "block";
   sheet.style.transform = "";
 
   void sheet.offsetWidth;
-
   sheet.classList.add("forward");
 
   sheet.addEventListener("animationend", function done(event) {
@@ -660,15 +897,10 @@ function previousPage() {
 
     backCover.classList.remove("visible");
 
-    backCover.addEventListener("transitionend", function done(event) {
-      if (event.propertyName !== "transform") return;
-
-      backCover.removeEventListener("transitionend", done);
-
+    waitForTransition(backCover, "transform", () => {
       showingBack = false;
       spread.style.display = "flex";
-      document.querySelector(".frame").style.background = "var(--cream)";
-
+      frame.style.background = "var(--cream)";
       animating = false;
       updateControls();
     });
@@ -682,18 +914,17 @@ function previousPage() {
     animating = true;
     updateControls();
 
-    const currentLeft = turn * 2 + 1;
-    const previousRight = currentLeft - 1;
+    const previousLeftIndex = turn * 2 - 1;
+    const previousRightIndex = turn * 2;
 
-    sheetFront.innerHTML = pageHTML(previousRight);
-    sheetBack.innerHTML = pageHTML(currentLeft);
+    sheetFront.innerHTML = pages[previousLeftIndex]?.html || "";
+    sheetBack.innerHTML = pages[previousRightIndex]?.html || "";
 
     sheet.classList.remove("forward", "backward");
     sheet.style.display = "block";
     sheet.style.transform = "rotateY(-180deg)";
 
     void sheet.offsetWidth;
-
     sheet.classList.add("backward");
 
     sheet.addEventListener("animationend", function done(event) {
@@ -722,11 +953,7 @@ function previousPage() {
   closedLeft.style.display = "block";
   frontCover.classList.remove("open");
 
-  frontCover.addEventListener("transitionend", function done(event) {
-    if (event.propertyName !== "transform") return;
-
-    frontCover.removeEventListener("transitionend", done);
-
+  waitForTransition(frontCover, "transform", () => {
     opened = false;
     animating = false;
     updateControls();
@@ -734,18 +961,42 @@ function previousPage() {
 }
 
 nextBtn.addEventListener("click", () => {
-  if (!opened) {
-    openBook();
-  } else {
-    turnPage();
-  }
+  if (!opened) openBook();
+  else turnPage();
 });
 
 prevBtn.addEventListener("click", previousPage);
 
-renderSpread();
-updateControls();
-</script>
+/* =====================================
+   SEND MESSAGE INTO THE VOID
+===================================== */
 
+sendMessage.addEventListener("click", () => {
+  if (!moonMessage.value.trim()) return;
+
+  moonMessage.value = "";
+
+  messageAnimation.classList.remove("play");
+  void messageAnimation.offsetWidth;
+  messageAnimation.classList.add("play");
+});
+
+window.addEventListener("load", () => {
+  splitIntoPages();
+  updateControls();
+});
+
+let resizeTimer;
+
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+
+  resizeTimer = setTimeout(() => {
+    if (!opened && !animating) splitIntoPages();
+  }, 200);
+});
+
+
+</script>
 </body>
 </html>
