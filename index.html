@@ -6,7 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arryssa Moonlight ✧</title>
 <link rel="icon" type="image/png" href="logo.png">
+
 <style>
+:root {
+    --lavender: #e7dcf5;
+    --cream: #f5efe6;
+    --purple: #5d516b;
+    --grey: #706b64;
+    --white: #f5f3f0;
+    --pale: #efebf5;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -14,20 +24,23 @@
 body {
     margin: 0;
     min-height: 100vh;
+    position: relative;
     font-family: "MV Boli", sans-serif;
-    color: #59466b;
-    background: linear-gradient(135deg, #e8dced, #eee5d8, #ffffff);
+    color: var(--purple);
+    background: linear-gradient(135deg, var(--lavender), var(--cream), var(--white));
     text-align: center;
     overflow-x: hidden;
 }
 
 .container {
+    position: relative;
+    z-index: 2;
     width: 90%;
     max-width: 550px;
-    margin: 60px auto;
+    margin: 60px auto 30px;
     padding: 30px 22px;
-    background: rgba(255,255,255,0.72);
-    border: 2px solid #d4c5dc;
+    background: rgba(245, 243, 240, 0.88);
+    border: 2px solid var(--lavender);
     border-radius: 25px;
     box-shadow: 0 8px 25px #b8a7c555;
     animation: fadeIn 1.2s ease;
@@ -42,27 +55,27 @@ body {
     width: 125px;
     height: 125px;
     border-radius: 50%;
-    border: 4px solid #c7b5d4;
+    border: 4px solid var(--lavender);
     object-fit: cover;
-    background: #e9dfee;
+    background: var(--pale);
 }
 
 h1 {
     font-size: 30px;
     margin-bottom: 5px;
-    color: #806394;
+    color: var(--purple);
 }
 
 .subtitle {
-    color: #9987a5;
+    color: var(--grey);
     font-size: 14px;
     margin-bottom: 25px;
 }
 
 .about {
     text-align: center;
-    background: #f3edf4;
-    border: 1px solid #d8c9df;
+    background: var(--pale);
+    border: 1px solid var(--lavender);
     border-radius: 18px;
     padding: 20px;
     line-height: 1.7;
@@ -71,13 +84,13 @@ h1 {
 }
 
 .about h2 {
-    color: #806394;
+    color: var(--purple);
     font-size: 17px;
     margin: 18px 0 5px;
 }
 
 .separator {
-    color: #aa96b7;
+    color: var(--grey);
     margin: 12px 0;
 }
 
@@ -92,9 +105,9 @@ h1 {
     display: block;
     padding: 15px;
     border-radius: 15px;
-    background: #ffffff;
-    border: 1px solid #d4c5dc;
-    color: #715783;
+    background: var(--white);
+    border: 1px solid var(--lavender);
+    color: var(--purple);
     text-decoration: none;
     font-weight: bold;
     letter-spacing: 1px;
@@ -102,7 +115,7 @@ h1 {
 }
 
 .links a:hover {
-    background: #e9ddef;
+    background: var(--lavender);
     transform: translateY(-4px);
     box-shadow: 0 5px 15px #b9a5c555;
 }
@@ -110,20 +123,97 @@ h1 {
 footer {
     margin-top: 28px;
     font-size: 12px;
-    color: #a394a9;
+    color: var(--grey);
 }
 
-.star {
-    position: fixed;
-    color: #ffffff;
+/* Side decorations */
+.floating-symbol {
+    position: absolute;
+    z-index: 1;
     pointer-events: none;
-    animation: float 5s infinite ease-in-out;
-    z-index: -1;
+    color: var(--purple);
+    user-select: none;
+    animation: float 6s infinite ease-in-out;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-25px) rotate(20deg); }
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-12px) rotate(12deg);
+    }
+}
+
+/* Hidden moon on the side */
+.secret-moon {
+    position: absolute;
+    z-index: 5;
+    background: none;
+    border: none;
+    padding: 8px;
+    font-size: 27px;
+    color: var(--purple);
+    cursor: pointer;
+    animation: float 5s infinite ease-in-out;
+    transition: 0.3s;
+}
+
+.secret-moon:hover {
+    transform: scale(1.2);
+    color: var(--grey);
+}
+
+/* Password panel */
+.password-panel {
+    display: none;
+    margin-top: 20px;
+    padding: 18px;
+    background: var(--cream);
+    border: 1px solid var(--lavender);
+    border-radius: 15px;
+}
+
+.password-panel input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid var(--lavender);
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--purple);
+    font-family: inherit;
+}
+
+.password-panel button {
+    padding: 10px 20px;
+    border: 1px solid var(--lavender);
+    border-radius: 10px;
+    background: var(--lavender);
+    color: var(--purple);
+    font-family: inherit;
+    cursor: pointer;
+}
+
+#error-message {
+    color: var(--grey);
+    font-size: 12px;
+}
+
+/* Hide side decorations on narrow screens */
+@media (max-width: 650px) {
+    .side-decoration {
+        display: none;
+    }
+
+    .container {
+        width: 92%;
+        padding: 25px 17px;
+    }
+
+    .secret-moon {
+        display: none;
+    }
 }
 </style>
 </head>
@@ -132,7 +222,6 @@ footer {
 
 <div class="container">
 
-    <!-- Replace pfp.png with your profile picture filename -->
     <img src="pfp.png" class="pfp" alt="Arryssa's profile picture">
 
     <h1>Arryssa Moonlight</h1>
@@ -140,8 +229,7 @@ footer {
 
     <div class="about">
 
-        <h2>✧~~~~~~~~~~✧</h2>
-        Hi! Arryssa here!
+                Hi! Arryssa here!
 
         <div class="separator">✧~~~~~~~~~~✧</div>
 
@@ -193,6 +281,17 @@ footer {
 
     </div>
 
+    <div class="password-panel" id="password-panel">
+        <h2>✧ A Little Secret ✧</h2>
+        <p>Enter the password to continue...</p>
+
+        <input type="password" id="password-input" placeholder="Enter password">
+
+        <button onclick="checkPassword()">Unlock</button>
+
+        <p id="error-message"></p>
+    </div>
+
     <footer>
         ✧ Made with love by Arryssa ✧
     </footer>
@@ -200,17 +299,70 @@ footer {
 </div>
 
 <script>
-const symbols = ["✧", "☆", "⋆", "✦", "♡"];
+const symbols = ["✧", "✿", "★", "♡"];
 
-for (let i = 0; i < 25; i++) {
-    const star = document.createElement("div");
-    star.className = "star";
-    star.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-    star.style.left = Math.random() * 100 + "vw";
-    star.style.top = Math.random() * 100 + "vh";
-    star.style.fontSize = (12 + Math.random() * 15) + "px";
-    star.style.animationDelay = Math.random() * 5 + "s";
-    document.body.appendChild(star);
+/* Decorations distributed down both sides */
+const sidePositions = [
+    { left: "3%", top: "160px" },
+    { left: "8%", top: "390px" },
+    { left: "3%", top: "650px" },
+    { left: "7%", top: "900px" },
+    { left: "3%", top: "1180px" },
+    { left: "8%", top: "1450px" },
+
+    { left: "95%", top: "220px" },
+    { left: "91%", top: "480px" },
+    { left: "96%", top: "740px" },
+    { left: "92%", top: "1010px" },
+    { left: "96%", top: "1280px" },
+    { left: "91%", top: "1530px" }
+];
+
+sidePositions.forEach((position, i) => {
+    const decoration = document.createElement("div");
+
+    decoration.className = "floating-symbol side-decoration";
+    decoration.textContent = symbols[i % symbols.length];
+    decoration.style.left = position.left;
+    decoration.style.top = position.top;
+    decoration.style.fontSize = (16 + (i % 3) * 4) + "px";
+    decoration.style.animationDelay = (i * 0.5) + "s";
+
+    document.body.appendChild(decoration);
+});
+
+/* Secret moon on the right side, near the middle of the page */
+const moon = document.createElement("button");
+moon.className = "secret-moon side-decoration";
+moon.textContent = "☾";
+moon.setAttribute("aria-label", "Open secret");
+moon.style.right = "2%";
+moon.style.top = "50%";
+
+document.body.appendChild(moon);
+
+/* Open and close password panel */
+moon.addEventListener("click", function() {
+    const panel = document.getElementById("password-panel");
+
+    panel.style.display =
+        panel.style.display === "block" ? "none" : "block";
+
+    if (panel.style.display === "block") {
+        document.getElementById("password-input").focus();
+    }
+});
+
+/* Password check */
+function checkPassword() {
+    const password = document.getElementById("password-input").value;
+    const error = document.getElementById("error-message");
+
+    if (password === "1882014") {
+        window.location.href = "yes.html";
+    } else {
+        error.textContent = "Nope! Try again ✧";
+    }
 }
 </script>
 
