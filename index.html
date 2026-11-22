@@ -17,9 +17,7 @@
     --pale: #efebf5;
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -164,6 +162,19 @@ footer {
     color: var(--grey);
 }
 
+/* Scattered password digits */
+.password-clue {
+    position: absolute;
+    z-index: 1;
+    color: var(--purple);
+    opacity: 0.65;
+    font-size: 15px;
+    pointer-events: none;
+    user-select: none;
+    animation: float 6s infinite ease-in-out;
+    text-shadow: 0 0 8px #b9a4ce88;
+}
+
 /* Password panel */
 .password-panel {
     display: none;
@@ -200,7 +211,6 @@ footer {
     font-size: 12px;
 }
 
-/* Hide side decorations on narrow screens */
 @media (max-width: 650px) {
     .side-decoration {
         display: none;
@@ -213,6 +223,12 @@ footer {
 
     .secret-moon {
         display: none;
+    }
+
+    /* Keep the password clues visible on mobile */
+    .password-clue {
+        font-size: 11px;
+        opacity: 0.55;
     }
 }
 </style>
@@ -229,7 +245,7 @@ footer {
 
     <div class="about">
 
-                Hi! Arryssa here!
+        Hi! Arryssa here!
 
         <div class="separator">✧~~~~~~~~~~✧</div>
 
@@ -301,7 +317,7 @@ footer {
 <script>
 const symbols = ["✧", "✿", "★", "♡"];
 
-/* Decorations distributed down both sides */
+/* Original decorations, unchanged */
 const sidePositions = [
     { left: "3%", top: "160px" },
     { left: "8%", top: "390px" },
@@ -331,7 +347,34 @@ sidePositions.forEach((position, i) => {
     document.body.appendChild(decoration);
 });
 
-/* Secret moon on the right side, near the middle of the page */
+/* Password digits scattered separately.
+   Their order follows the secret trail. */
+const passwordClues = [
+    { digit: "1", left: "3%", top: "110px" },
+    { digit: "8", right: "3%", top: "330px" },
+    { digit: "8", left: "4%", top: "570px" },
+    { digit: "2", right: "4%", top: "820px" },
+    { digit: "0", left: "3%", top: "1080px" },
+    { digit: "1", right: "3%", top: "1350px" },
+   { digit: "4", right: "5%", top: "1630px" }
+];
+
+passwordClues.forEach((clue, i) => {
+    const digit = document.createElement("span");
+
+    digit.className = "password-clue";
+    digit.textContent = clue.digit;
+
+    if (clue.left) digit.style.left = clue.left;
+    if (clue.right) digit.style.right = clue.right;
+
+    digit.style.top = clue.top;
+    digit.style.animationDelay = (i * 0.4) + "s";
+
+    document.body.appendChild(digit);
+});
+
+/* Secret moon on the right side, near the middle */
 const moon = document.createElement("button");
 moon.className = "secret-moon side-decoration";
 moon.textContent = "☾";
