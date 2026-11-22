@@ -3,138 +3,749 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Just deeper about me</title>
-<link rel="icon" type="image/png" href="logo1.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Just deeper about me </title>
 
 <style>
 :root {
-    --dark: #100e12;
-    --card: #1c1920;
-    --inner: #25212a;
-    --beige: #d8c8ad;
-    --cream: #f5efe6;
-    --lavender: #b9a4ce;
-    --grey: #a69b9b;
-    --border: #d8c8ad;
+  --dark: #100e12;
+  --card: #1c1920;
+  --inner: #25212a;
+  --beige: #d8c8ad;
+  --cream: #f5efe6;
+  --lavender: #b9a4ce;
+  --purple: #5d516b;
+  --grey: #706b64;
+  --cover: #9a87a8;
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: "MV Boli", sans-serif;
-    color: var(--cream);
-    background-color: var(--dark);
-    background-image:
-        radial-gradient(ellipse at 15% 20%, #493a4d55 0%, transparent 42%),
-        radial-gradient(ellipse at 85% 75%, #806c4b22 0%, transparent 40%);
-    text-align: center;
-    overflow-x: hidden;
-}
-
-.container {
-    width: 90%;
-    max-width: 550px;
-    margin: 60px auto;
-    padding: 30px 22px;
-    background: rgba(28, 25, 32, 0.94);
-    border: 2px solid var(--border);
-    border-radius: 25px;
-    box-shadow:
-        0 8px 30px #00000088,
-        0 0 25px #b9a4ce15;
-    animation: fadeIn 1.2s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  margin: 0;
+  min-height: 100vh;
+  padding: 30px 16px;
+  background: var(--dark);
+  color: var(--cream);
+  font-family: MV Boli; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
-    font-size: 30px;
-    margin-bottom: 8px;
-    color: var(--beige);
+  color: var(--lavender);
+  letter-spacing: 3px;
+  font-size: 24px;
+  margin-bottom: 35px;
 }
 
-.subtitle {
-    color: var(--lavender);
-    font-size: 14px;
-    margin-bottom: 25px;
+.book-area {
+  width: min(760px, 94vw);
+  perspective: 1800px;
 }
 
-.about {
-    text-align: center;
-    background: var(--inner);
-    border: 1px solid #75677a;
-    border-radius: 18px;
-    padding: 25px 20px;
-    line-height: 1.8;
-    font-size: 14px;
-    min-height: 300px;
-    color: var(--cream);
+.book {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.52 / 1;
 }
 
-.about h2 {
-    color: var(--beige);
-    font-size: 17px;
-    margin: 18px 0 5px;
+.frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 2px solid var(--beige);
+  border-radius: 5px;
+  background: var(--cream);
+  box-shadow: 0 18px 45px #0008;
 }
 
-.separator {
-    color: var(--lavender);
-    margin: 12px 0;
+/* Inside spread */
+
+.spread {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  z-index: 3;
+  background: transparent;
 }
 
-footer {
-    margin-top: 28px;
-    font-size: 12px;
-    color: var(--grey);
+.page {
+  width: 50%;
+  height: 100%;
+  padding: clamp(15px, 4vw, 35px);
+  overflow: hidden;
+  background: var(--cream);
+  color: var(--purple);
 }
 
-@media (max-width: 600px) {
-    .container {
-        width: 92%;
-        padding: 25px 17px;
-        margin: 35px auto;
-    }
+.page.left {
+  border-right: 1px solid var(--beige);
+}
+
+.page.right {
+  border-left: 1px solid var(--beige);
+}
+
+.page h2,
+.sheet-face h2 {
+  color: var(--purple);
+  font-size: clamp(17px, 3vw, 25px);
+  margin-top: 0;
+}
+
+.page p,
+.sheet-face p {
+  color: var(--grey);
+  font-size: clamp(12px, 2vw, 16px);
+  line-height: 1.7;
+}
+
+/* Closed book backing */
+
+.closed-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: var(--inner);
+  z-index: 5;
+}
+
+/* Front cover */
+
+.front-cover {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 1.4s cubic-bezier(.65, 0, .25, 1);
+  z-index: 10;
+}
+
+.front-cover.open {
+  transform: rotateY(-180deg);
+}
+
+.cover-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid var(--beige);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.cover-front {
+  background: var(--cover);
+  color: var(--beige);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.cover-front::before {
+  content: "✧  ✿  ✧";
+  position: absolute;
+  inset: 15px 12px;
+  border: 1px solid #d8c8ad99;
+  outline: 1px solid #b9a4ce55;
+  outline-offset: -7px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 16px;
+  color: var(--lavender);
+  font-size: clamp(13px, 2.3vw, 20px);
+  letter-spacing: 9px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.cover-front::after {
+  content: "☾";
+  position: absolute;
+  top: 21%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--beige);
+  font-size: clamp(42px, 7vw, 68px);
+  line-height: 1;
+  text-shadow: 0 0 12px #d8c8ad88, 0 0 28px #b9a4ce77;
+  pointer-events: none;
+}
+
+.cover-front h2 {
+  position: relative;
+  margin: 65px 0 8px;
+  font-size: clamp(17px, 3.5vw, 29px);
+  letter-spacing: 2px;
+  line-height: 1.35;
+  text-shadow: 0 2px 12px #0009;
+}
+
+.cover-front p {
+  position: relative;
+  color: var(--lavender);
+  font-size: clamp(10px, 1.8vw, 13px);
+  letter-spacing: 3px;
+}
+
+.cover-inside {
+  background: var(--cream);
+  color: var(--purple);
+  transform: rotateY(180deg);
+}
+
+.cover-inside h2 {
+  color: var(--purple);
+}
+
+.cover-inside p {
+  color: var(--grey);
+  line-height: 1.7;
+  font-size: clamp(12px, 2vw, 15px);
+}
+
+/* Turning sheet */
+
+.sheet {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  display: none;
+  z-index: 7;
+}
+
+.sheet.forward {
+  display: block;
+  animation: forward 1.15s cubic-bezier(.65, 0, .25, 1) forwards;
+}
+
+.sheet.backward {
+  display: block;
+  animation: backward 1.15s cubic-bezier(.65, 0, .25, 1) forwards;
+}
+
+.sheet-face {
+  position: absolute;
+  inset: 0;
+  padding: clamp(15px, 4vw, 35px);
+  background: var(--cream);
+  color: var(--purple);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-left: 1px solid var(--beige);
+}
+
+.sheet-back {
+  transform: rotateY(180deg);
+}
+
+@keyframes forward {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(-180deg); }
+}
+
+@keyframes backward {
+  from { transform: rotateY(-180deg); }
+  to { transform: rotateY(0deg); }
+}
+
+/* Animated back cover */
+
+.back-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  visibility: hidden;
+  transform-origin: right center;
+  transform: rotateY(-180deg);
+  transition:
+    transform 1.15s cubic-bezier(.65, 0, .25, 1),
+    visibility 0s linear 1.15s;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  color: var(--beige);
+  border: 1px solid var(--beige);
+  z-index: 12;
+  background: var(--cover);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.back-cover.visible {
+  visibility: visible;
+  transform: rotateY(0deg);
+  transition:
+    transform 1.15s cubic-bezier(.65, 0, .25, 1),
+    visibility 0s;
+}
+
+.back-cover::before {
+  content: "✧  ✿  ✧";
+  position: absolute;
+  inset: 15px 12px;
+  border: 1px solid #d8c8ad99;
+  outline: 1px solid #b9a4ce55;
+  outline-offset: -7px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 16px;
+  color: var(--lavender);
+  font-size: clamp(13px, 2.3vw, 20px);
+  letter-spacing: 9px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.back-cover::after {
+  content: "☾";
+  position: absolute;
+  top: 21%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--beige);
+  font-size: clamp(42px, 7vw, 68px);
+  text-shadow: 0 0 12px #d8c8ad88, 0 0 28px #b9a4ce77;
+  pointer-events: none;
+}
+
+.back-cover h2 {
+  position: relative;
+  margin-top: 65px;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 12px #0009;
+}
+
+.back-cover p {
+  position: relative;
+  color: var(--lavender);
+  letter-spacing: 1px;
+}
+
+/* Controls */
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+button {
+  background: var(--inner);
+  color: var(--beige);
+  border: 1px solid var(--beige);
+  border-radius: 5px;
+  padding: 11px 25px;
+  font-family: MV Boli; 
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: var(--beige);
+  color: var(--dark);
+}
+
+button:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+#status {
+  color: var(--grey);
+  font-size: 12px;
+  margin-top: 17px;
+  letter-spacing: 1px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<h1>✧ Just deeper about me bc im not sunshine and rainbows ✧</h1>
 
-    <h1>Just deeper me because I am NOT all sunshine and rainbows</h1>
+<div class="book-area">
+  <div class="book">
+    <div class="frame">
 
-    <div class="subtitle">
-       Tw!<br>
-✧rape
-✧blades
-✧abuse (maybe)  </div>
+      <div class="spread" id="spread">
+        <div class="page left" id="leftPage"></div>
+        <div class="page right" id="rightPage"></div>
+      </div>
 
-    <div class="about">
+      <div class="closed-left" id="closedLeft"></div>
 
-        <!-- WRITE YOUR OWN TEXT HERE -->
+      <div class="front-cover" id="frontCover">
+        <div class="cover-face cover-front">
+          <h2>ARRYSSA<br>MOONLIGHT</h2>
+          <p>✧ OPEN ME ✧</p>
+        </div>
+
+        <div class="cover-face cover-inside">
+          <h2>PAGE ONE</h2>
+          <p>
+            This is the permanent inside-left cover.
+            It stays attached to the front cover.
+          </p>
+          <p>✧ ☾ ✧</p>
+        </div>
+      </div>
+
+      <div class="sheet" id="sheet">
+        <div class="sheet-face" id="sheetFront"></div>
+        <div class="sheet-face sheet-back" id="sheetBack"></div>
+      </div>
+
+      <div class="back-cover" id="backCover">
+        <h2>THE END</h2>
+        <p>✧ Thanks for reading ✧</p>
+      </div>
 
     </div>
-
-    <footer>
-        ✧
-    </footer>
-
+  </div>
 </div>
+
+<div class="controls">
+  <button id="prevBtn" disabled>← Previous</button>
+  <button id="nextBtn">Open Book →</button>
+</div>
+
+<div id="status">CLOSED</div>
+
+<script>
+/*
+  PAGE ONE IS THE INSIDE OF THE FRONT COVER.
+
+  Normal pages begin at Page Two.
+
+  Physical sheets:
+  Sheet 1: Page Two / Page Three
+  Sheet 2: Page Four / Page Five
+  Sheet 3: Page Six / Page Seven
+*/
+
+const pages = {
+  2: {
+    title: "PAGE TWO",
+    text: "The first actual page. This begins on the right."
+  },
+  3: {
+    title: "PAGE THREE",
+    text: "The back of Page Two. It lands on the left."
+  },
+  4: {
+    title: "PAGE FOUR",
+    text: "This page is underneath Page Two on the right."
+  },
+  5: {
+    title: "PAGE FIVE",
+    text: "The back of Page Four."
+  },
+  6: {
+    title: "PAGE SIX",
+    text: "Another page in the book."
+  },
+  7: {
+    title: "PAGE SEVEN",
+    text: "The final page in this example."
+  }
+};
+
+const lastPage = Math.max(...Object.keys(pages).map(Number));
+const totalTurns = Math.ceil((lastPage - 1) / 2);
+
+let opened = false;
+let turn = 0;
+let animating = false;
+let showingBack = false;
+
+const frontCover = document.getElementById("frontCover");
+const closedLeft = document.getElementById("closedLeft");
+const leftPage = document.getElementById("leftPage");
+const rightPage = document.getElementById("rightPage");
+const sheet = document.getElementById("sheet");
+const sheetFront = document.getElementById("sheetFront");
+const sheetBack = document.getElementById("sheetBack");
+const backCover = document.getElementById("backCover");
+const spread = document.getElementById("spread");
+
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+const status = document.getElementById("status");
+
+function pageHTML(number) {
+  const page = pages[number];
+
+  if (!page) return "";
+
+  return `
+    <h2>${page.title}</h2>
+    <p>${page.text}</p>
+  `;
+}
+
+/*
+  turn 0:
+  Page One cover | Page Two
+
+  turn 1:
+  Page Three | Page Four
+
+  turn 2:
+  Page Five | Page Six
+
+  turn 3:
+  Page Seven | Blank
+*/
+
+function renderSpread() {
+  if (turn === 0) {
+    leftPage.innerHTML = "";
+
+    // Transparent so the inside cover's Page One shows.
+    leftPage.style.background = "transparent";
+  } else {
+    const leftNumber = turn * 2 + 1;
+
+    leftPage.innerHTML = pageHTML(leftNumber);
+    leftPage.style.background = "var(--cream)";
+  }
+
+  const rightNumber = turn * 2 + 2;
+  rightPage.innerHTML = pageHTML(rightNumber);
+}
+
+function updateControls() {
+  prevBtn.disabled = animating || (!opened && !showingBack);
+  nextBtn.disabled = animating;
+
+  if (showingBack) {
+    nextBtn.disabled = true;
+    nextBtn.textContent = "Finished";
+    status.textContent = "THE END";
+    return;
+  }
+
+  if (!opened) {
+    nextBtn.textContent = "Open Book →";
+    status.textContent = "CLOSED";
+    return;
+  }
+
+  nextBtn.textContent = turn >= totalTurns
+    ? "Back Cover →"
+    : "Next Page →";
+
+  status.textContent = `SPREAD ${turn + 1}`;
+}
+
+function openBook() {
+  if (animating || opened) return;
+
+  animating = true;
+  updateControls();
+
+  frontCover.classList.add("open");
+
+  frontCover.addEventListener("transitionend", function done(event) {
+    if (event.propertyName !== "transform") return;
+
+    frontCover.removeEventListener("transitionend", done);
+
+    opened = true;
+
+    frontCover.style.zIndex = "2";
+    closedLeft.style.display = "none";
+
+    renderSpread();
+
+    animating = false;
+    updateControls();
+  });
+}
+
+function turnPage() {
+  if (animating || !opened || showingBack) return;
+
+  if (turn >= totalTurns) {
+    showingBack = true;
+    animating = true;
+
+    spread.style.display = "none";
+    document.querySelector(".frame").style.background = "var(--inner)";
+
+    backCover.classList.add("visible");
+
+    backCover.addEventListener("transitionend", function done(event) {
+      if (event.propertyName !== "transform") return;
+
+      backCover.removeEventListener("transitionend", done);
+
+      animating = false;
+      updateControls();
+    });
+
+    updateControls();
+    return;
+  }
+
+  animating = true;
+  updateControls();
+
+  const frontNumber = turn * 2 + 2;
+  const backNumber = frontNumber + 1;
+
+  sheetFront.innerHTML = pageHTML(frontNumber);
+  sheetBack.innerHTML = pageHTML(backNumber);
+
+  sheet.classList.remove("forward", "backward");
+  sheet.style.display = "block";
+  sheet.style.transform = "";
+
+  void sheet.offsetWidth;
+
+  sheet.classList.add("forward");
+
+  sheet.addEventListener("animationend", function done(event) {
+    if (event.animationName !== "forward") return;
+
+    sheet.removeEventListener("animationend", done);
+
+    turn++;
+    renderSpread();
+
+    sheet.classList.remove("forward");
+    sheet.style.display = "none";
+    sheet.style.transform = "";
+
+    animating = false;
+    updateControls();
+  });
+}
+
+function previousPage() {
+  if (animating) return;
+
+  if (showingBack) {
+    animating = true;
+    updateControls();
+
+    backCover.classList.remove("visible");
+
+    backCover.addEventListener("transitionend", function done(event) {
+      if (event.propertyName !== "transform") return;
+
+      backCover.removeEventListener("transitionend", done);
+
+      showingBack = false;
+      spread.style.display = "flex";
+      document.querySelector(".frame").style.background = "var(--cream)";
+
+      animating = false;
+      updateControls();
+    });
+
+    return;
+  }
+
+  if (!opened) return;
+
+  if (turn > 0) {
+    animating = true;
+    updateControls();
+
+    const currentLeft = turn * 2 + 1;
+    const previousRight = currentLeft - 1;
+
+    sheetFront.innerHTML = pageHTML(previousRight);
+    sheetBack.innerHTML = pageHTML(currentLeft);
+
+    sheet.classList.remove("forward", "backward");
+    sheet.style.display = "block";
+    sheet.style.transform = "rotateY(-180deg)";
+
+    void sheet.offsetWidth;
+
+    sheet.classList.add("backward");
+
+    sheet.addEventListener("animationend", function done(event) {
+      if (event.animationName !== "backward") return;
+
+      sheet.removeEventListener("animationend", done);
+
+      turn--;
+      renderSpread();
+
+      sheet.classList.remove("backward");
+      sheet.style.display = "none";
+      sheet.style.transform = "";
+
+      animating = false;
+      updateControls();
+    });
+
+    return;
+  }
+
+  animating = true;
+  updateControls();
+
+  frontCover.style.zIndex = "10";
+  closedLeft.style.display = "block";
+  frontCover.classList.remove("open");
+
+  frontCover.addEventListener("transitionend", function done(event) {
+    if (event.propertyName !== "transform") return;
+
+    frontCover.removeEventListener("transitionend", done);
+
+    opened = false;
+    animating = false;
+    updateControls();
+  });
+}
+
+nextBtn.addEventListener("click", () => {
+  if (!opened) {
+    openBook();
+  } else {
+    turnPage();
+  }
+});
+
+prevBtn.addEventListener("click", previousPage);
+
+renderSpread();
+updateControls();
+</script>
 
 </body>
 </html>
