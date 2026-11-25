@@ -4,231 +4,539 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Just about me</title>
-<link rel="icon" type="image/png" href="logo.png">
+<title>Arryssa's Desktop</title>
+<link rel="icon" href="logo.png">
 
 <style>
 :root {
-    --lavender: #e7dcf5;
+    --pink: #f9e6ff;
+    --mauve: #a698ab;
     --cream: #f5efe6;
-    --purple: #5d516b;
-    --grey: #706b64;
-    --white: #f5f3f0;
-    --pale: #efebf5;
+    --grey: #a6a097;
+    --white: #ffffff;
+    --text: #655a6b;
 }
 
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
-    min-height: 100vh;
-    position: relative;
-    font-family: "MV Boli", sans-serif;
-    color: var(--purple);
-    background: linear-gradient(135deg, var(--lavender), var(--cream), var(--white));
-    text-align: center;
-    overflow-x: hidden;
+    height: 100vh;
+    overflow: hidden;
+    font-family: "MV Boli", "Trebuchet MS", cursive;
+    color: var(--text);
+    background: linear-gradient(135deg,
+        #f9e6ff 0%,
+        #ffffff 35%,
+        #f5efe6 70%,
+        #f9e6ff 100%);
+    background-size: 300% 300%;
+    animation: wallpaper 20s ease infinite;
+    user-select: none;
 }
 
-.container {
-    position: relative;
-    z-index: 2;
-    width: 90%;
-    max-width: 550px;
-    margin: 60px auto 30px;
-    padding: 30px 22px;
-    background: rgba(245, 243, 240, 0.88);
-    border: 2px solid var(--lavender);
-    border-radius: 25px;
-    box-shadow: 0 8px 25px #b8a7c555;
-    animation: fadeIn 1.2s ease;
+@keyframes wallpaper {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+/* DECORATIONS */
+
+#decorations {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
 }
 
-.pfp {
-    width: 125px;
-    height: 125px;
-    border-radius: 50%;
-    border: 4px solid var(--lavender);
-    object-fit: cover;
-    background: var(--pale);
+.floaty {
+    position: absolute;
+    color: rgba(166,152,171,.38);
+    animation: drift 12s ease-in-out infinite alternate;
 }
 
-h1 {
-    font-size: 30px;
-    margin-bottom: 5px;
-    color: var(--purple);
+@keyframes drift {
+    from { transform: translateY(0) rotate(-8deg); }
+    to { transform: translateY(-28px) rotate(12deg); }
 }
 
-.subtitle {
-    color: var(--grey);
-    font-size: 14px;
-    margin-bottom: 25px;
+.sparkle {
+    position: absolute;
+    color: rgba(166,152,171,.55);
+    animation: twinkle 3s infinite alternate;
 }
 
-.about {
-    text-align: center;
-    background: var(--pale);
-    border: 1px solid var(--lavender);
-    border-radius: 18px;
-    padding: 20px;
-    line-height: 1.7;
-    font-size: 14px;
-    margin: 20px 0;
+@keyframes twinkle {
+    from { opacity: .2; transform: scale(.8); }
+    to { opacity: 1; transform: scale(1.3); }
 }
 
-.about h2 {
-    color: var(--purple);
+/* MOUSE TRAIL */
+
+.trail {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    color: var(--mauve);
     font-size: 17px;
-    margin: 18px 0 5px;
+    text-shadow: 0 0 7px white;
+    animation: trailFade .8s ease-out forwards;
 }
 
-.separator {
-    color: var(--grey);
-    margin: 12px 0;
+@keyframes trailFade {
+    from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: scale(.2) translateY(-17px);
+    }
 }
 
-.links {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-top: 25px;
+/* TOP CENTRE CLOCK */
+
+.clock-widget {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: grab;
+    touch-action: none;
+    width: 260px;
+    padding: 12px 18px;
+    border-radius: 18px;
+    text-align: center;
+    background: rgba(255,255,255,.65);
+    border: 1px solid rgba(166,152,171,.35);
+    box-shadow: 0 5px 18px rgba(166,152,171,.1);
+    backdrop-filter: blur(12px);
+    z-index: 4;
 }
 
-.links a {
-    display: block;
-    padding: 15px;
-    border-radius: 15px;
-    background: var(--white);
-    border: 1px solid var(--lavender);
-    color: var(--purple);
-    text-decoration: none;
-    font-weight: bold;
-    letter-spacing: 1px;
-    transition: 0.3s ease;
-}
-
-.links a:hover {
-    background: var(--lavender);
-    transform: translateY(-4px);
-    box-shadow: 0 5px 15px #b9a5c555;
-}
-
-footer {
-    margin-top: 28px;
+.clock-title {
     font-size: 12px;
-    color: var(--grey);
+    letter-spacing: 1px;
 }
 
-/* Side decorations */
-.floating-symbol {
+.clock-time {
+    font-size: 29px;
+}
+
+.clock-date {
+    font-size: 12px;
+}
+
+/* DESKTOP ICONS */
+
+.desktop-icons {
     position: absolute;
-    z-index: 1;
-    pointer-events: none;
-    color: var(--purple);
-    user-select: none;
-    animation: float 6s infinite ease-in-out;
+    top: 20px;
+    left: 18px;
+    display: grid;
+    grid-template-columns: 88px;
+    grid-auto-flow: row;
+    gap: 8px;
+    z-index: 2;
 }
 
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-12px) rotate(12deg);
-    }
-}
-
-/* Hidden moon on the side */
-.secret-moon {
-    position: absolute;
-    z-index: 5;
-    background: none;
-    border: none;
-    padding: 8px;
-    font-size: 27px;
-    color: var(--purple);
+.desktop-icon {
+    width: 88px;
+    min-height: 76px;
+    padding: 6px 3px;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    background: transparent;
+    color: var(--text);
     cursor: pointer;
-    animation: float 5s infinite ease-in-out;
-    transition: 0.3s;
+    text-align: center;
+    font-family: inherit;
+    font-size: 12px;
+    text-shadow: 0 1px 5px white;
 }
 
-.secret-moon:hover {
-    transform: scale(1.2);
-    color: var(--grey);
+.desktop-icon:hover {
+    background: rgba(255,255,255,.55);
+    border-color: rgba(166,152,171,.3);
 }
 
-/* Scattered password digits */
-.password-clue {
+/* CUSTOM IMAGE ICONS */
+
+.icon-picture {
+    width: 43px;
+    height: 43px;
+    margin: 0 auto 5px;
+    display: block;
+    object-fit: contain;
+    border-radius: 12px;
+    filter: drop-shadow(0 2px 4px rgba(80,60,90,.12));
+    transition: transform .2s ease;
+}
+
+.desktop-icon:hover .icon-picture {
+    transform: translateY(-3px) scale(1.05);
+}
+
+/* PROFILE WIDGET */
+
+.profile-widget {
     position: absolute;
-    z-index: 1;
-    color: var(--purple);
-    opacity: 0.65;
-    font-size: 15px;
-    pointer-events: none;
-    user-select: none;
-    animation: float 6s infinite ease-in-out;
-    text-shadow: 0 0 8px #b9a4ce88;
+    top: 25px;
+    right: 30px;
+    width: 145px;
+    text-align: center;
+    padding: 12px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.55);
+    border: 1px solid rgba(166,152,171,.3);
+    backdrop-filter: blur(9px);
+    z-index: 4;
 }
 
-/* Password panel */
-.password-panel {
-    display: none;
-    margin-top: 20px;
-    padding: 18px;
-    background: var(--cream);
-    border: 1px solid var(--lavender);
-    border-radius: 15px;
+.profile-widget img {
+    width: 95px;
+    height: 95px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid white;
+    cursor: pointer;
 }
 
-.password-panel input {
+.profile-widget p {
+    margin: 7px 0 0;
+    font-size: 12px;
+}
+
+.widget-handle {
+    cursor: grab;
+    touch-action: none;
+}
+
+.widget.dragging {
+    z-index: 20;
+}
+
+/* OC MASCOT */
+
+#mascot {
+    position: absolute;
+    left: 72%;
+    top: 55%;
+    width: 150px;
+    z-index: 8;
+    text-align: center;
+    cursor: grab;
+    touch-action: none;
+}
+
+#mascot img {
+    display: block;
     width: 100%;
+    height: 175px;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 5px 7px rgba(80,60,90,.15));
+    transition: transform .15s ease;
+}
+
+#mascot:hover img {
+    transform: translateY(-4px);
+}
+
+#mascotCount {
+    display: inline-block;
+    margin-top: 2px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.85);
+    border: 1px solid var(--pink);
+    font-size: 12px;
+    pointer-events: none;
+}
+
+/* WINDOWS */
+
+.window {
+    display: none;
+    position: absolute;
+    top: 120px;
+    left: 30%;
+    width: min(440px, 88vw);
+    max-height: 70vh;
+    overflow: auto;
+    border: 1px solid white;
+    border-radius: 16px;
+    background: rgba(255,255,255,.95);
+    box-shadow: 0 12px 35px rgba(65,48,82,.16);
+    z-index: 10;
+    backdrop-filter: blur(15px);
+}
+
+.window.open {
+    display: block;
+}
+
+.window-header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: var(--pink);
+    border-bottom: 1px solid rgba(166,152,171,.3);
+    cursor: grab;
+    touch-action: none;
+}
+
+.window-header button {
+    border: none;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.window-content {
+    padding: 18px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.window-content a {
+    color: var(--text);
+}
+
+.window-content button {
+    padding: 8px 12px;
+    border: 1px solid var(--mauve);
+    border-radius: 9px;
+    background: var(--pink);
+    color: var(--text);
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.window-content input {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid var(--mauve);
+    border-radius: 8px;
+    background: var(--cream);
+    color: var(--text);
+    margin: 5px 0;
+    font-family: inherit;
+}
+
+.game-card {
     padding: 12px;
     margin: 10px 0;
-    border: 1px solid var(--lavender);
-    border-radius: 10px;
-    background: var(--white);
-    color: var(--purple);
-    font-family: inherit;
+    border-radius: 12px;
+    background: var(--pink);
+    border: 1px solid rgba(166,152,171,.35);
 }
 
-.password-panel button {
-    padding: 10px 20px;
-    border: 1px solid var(--lavender);
-    border-radius: 10px;
-    background: var(--lavender);
-    color: var(--purple);
-    font-family: inherit;
+/* TASKBAR */
+
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    background: #f5efe6;
+    border-top: 1px solid #a6a097;
+    backdrop-filter: blur(14px);
+    z-index: 50;
+}
+
+.taskbar button {
+    padding: 6px 11px;
+    border: none;
+    border-radius: 8px;
+    background: var(--pink);
+    color: var(--text);
     cursor: pointer;
-}
-
-#error-message {
-    color: var(--grey);
+    font-family: inherit;
     font-size: 12px;
 }
 
-@media (max-width: 650px) {
-    .side-decoration {
-        display: none;
+.taskbar-time {
+    font-size: 12px;
+}
+
+/* GALLERY GRID AND IMAGE VIEWER */
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 4px;
+}
+
+.gallery-thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2px solid var(--cream);
+    box-shadow: 0 3px 10px rgba(65,48,82,.10);
+    transition: transform .2s ease, border-color .2s ease;
+}
+
+.gallery-thumb:hover {
+    transform: scale(1.035);
+    border-color: var(--mauve);
+}
+
+.gallery-viewer {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 64px 18px 54px;
+    background: rgba(25,20,30,.90);
+    z-index: 9999;
+}
+
+.gallery-viewer.open {
+    display: flex;
+}
+
+.gallery-viewer-image-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: min(75vw, 850px);
+}
+
+.gallery-viewer img {
+    display: block;
+    max-width: 100%;
+    max-height: 72vh;
+    object-fit: contain;
+    border: 3px solid var(--cream);
+    border-radius: 12px;
+    box-shadow: 0 10px 35px rgba(0,0,0,.3);
+}
+
+.gallery-image-count {
+    color: var(--cream);
+    font-size: 13px;
+    text-align: center;
+}
+
+.gallery-arrow,
+.gallery-close {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid var(--mauve);
+    border-radius: 50%;
+    background: var(--cream);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 25px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,.18);
+}
+
+.gallery-arrow:hover,
+.gallery-close:hover {
+    background: var(--pink);
+}
+
+.gallery-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 23px;
+}
+
+@media(max-width: 500px) {
+    .gallery-viewer {
+        gap: 7px;
+        padding-left: 8px;
+        padding-right: 8px;
     }
 
-    .container {
-        width: 92%;
-        padding: 25px 17px;
+    .gallery-viewer-image-wrap {
+        max-width: calc(100vw - 112px);
     }
 
-    .secret-moon {
-        display: none;
+    .gallery-viewer img {
+        max-height: 65vh;
     }
 
-    /* Keep the password clues visible on mobile */
-    .password-clue {
-        font-size: 11px;
-        opacity: 0.55;
+    .gallery-arrow {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width: 650px) {
+    .desktop-icons {
+        top: 10px;
+        left: 5px;
+        grid-template-columns: 65px;
+        grid-auto-flow: row;
+        gap: 5px;
+    }
+
+    .desktop-icon {
+        width: 65px;
+        font-size: 10px;
+    }
+
+    .icon-picture {
+        width: 35px;
+        height: 35px;
+    }
+
+    .clock-widget {
+        top: 180px;
+        width: 210px;
+    }
+
+    .profile-widget {
+        top: 12px;
+        right: 8px;
+        width: 100px;
+        padding: 8px;
+    }
+
+    .profile-widget img {
+        width: 65px;
+        height: 65px;
+    }
+
+    #mascot {
+        left: 55%;
+        top: 60%;
+        width: 115px;
+    }
+
+    #mascot img {
+        height: 135px;
     }
 }
 </style>
@@ -236,178 +544,606 @@ footer {
 
 <body>
 
-<div class="container">
+<div id="decorations"></div>
 
-    <img src="pfp.png" class="pfp" alt="Arryssa's profile picture">
+<!-- DESKTOP FILES -->
 
-    <h1>Arryssa Moonlight</h1>
-    <div class="subtitle">✧ Stay whimsy, stay you ✧</div>
+<div class="desktop-icons">
 
-    <div class="about">
+    <button class="desktop-icon" onclick="openWindow('infoWindow')">
+        <img class="icon-picture" src="info.png" alt="Info icon">
+        Info
+    </button>
 
-        Hi! Arryssa here!
+    <button class="desktop-icon" onclick="openWindow('socialWindow')">
+        <img class="icon-picture" src="socials.png" alt="Socials icon">
+        Socials
+    </button>
 
-        <div class="separator">✧~~~~~~~~~~✧</div>
+    <button class="desktop-icon" onclick="openWindow('gamesWindow')">
+        <img class="icon-picture" src="games.png" alt="Minigames icon">
+        Minigames
+    </button>
 
-        I'm a Roblox ranter! I talk about annoying stuff, vent, and joke around. My favourite colour is PURPLE!
+    <button class="desktop-icon" onclick="openWindow('musicWindow')">
+        <img class="icon-picture" src="music.png" alt="Music icon">
+        Music
+    </button>
 
-        <div class="separator">✧~~~~~~~~~~✧</div>
+    <button class="desktop-icon" onclick="openWindow('galleryWindow')">
+        <img class="icon-picture" src="gallery.png" alt="Gallery icon">
+        Gallery
+    </button>
 
-        <h2>✧ Fandoms I'm In ✧</h2>
-        Block Tales, A Broken Dream, Yi Xi (NOT VOCALOID, YI XI ONLY), and the Backrooms!
-
-        I also stan ILLIT and MEOVV! My biases are Iroha and Sooin!
-
-        <div class="separator">✧~~~~~~~~~~✧</div>
-
-        <h2>✧ Things I Like ✧</h2>
-        Dark chocolate, cats, da moon, flowers, silver, clouds, jellyfish, food, reading, writing, sketching, dancing, editing, Roblox, random crafts, and twin braids!
-
-        <div class="separator">✧~~~~~~~~~~✧</div>
-
-        <h2>✧ Weird Things About Me ✧</h2>
-        I have insomnia, my favourite number is 3 for absolutely no reason, and I tend to overglaze myself slightly. I also have Spectrophobia, the fear of mirrors or what might appear inside them.
-
-        <div class="separator">✧~~~~~~~~~~✧</div>
-
-        <h2>✧ My Style ✧</h2>
-        Cutecore, low poly, weirdcore/dreamcore/traumacore, and psychological horror!
-
-        <div class="separator">✧~~~~~~~~~~✧</div>
-
-        Thanks for reading all this yap! And taking the time to explore my channel! Stay whimsy. Stay you! And drink ya watah.
-
-        <div class="separator">✧~~~~~~~~~~✧</div>
-
-        Arryssa out!
-
-    </div>
-
-    <div class="links">
-
-        <a href="https://www.youtube.com/@ArryssaMoonlight" target="_blank">☾ YouTube</a>
-
-        <a href="https://discord.com/users/1367008530191618139" target="_blank">✧ Discord</a>
-
-        <a href="https://www.roblox.com/users/4627058434/profile" target="_blank">♡ Roblox</a>
-
-        <a href="https://pin.it/5Yums5OFf" target="_blank">✿ Pinterest</a>
-
-        <a href="https://www.instagram.com/arryssa_moonlight/?hl=en" target="_blank">☆ Instagram</a>
-
-    </div>
-
-    <div class="password-panel" id="password-panel">
-        <h2>✧ A Little Secret ✧</h2>
-        <p>Enter the password to continue...</p>
-
-        <input type="password" id="password-input" placeholder="Enter password">
-
-        <button onclick="checkPassword()">Unlock</button>
-
-        <p id="error-message"></p>
-    </div>
-
-    <footer>
-        ✧ Made with love by Arryssa ✧
-    </footer>
+    <button class="desktop-icon" onclick="openWindow('secretWindow')">
+        <img class="icon-picture" src="secret.png" alt="Secret icon">
+        DO NOT ENTER
+    </button>
 
 </div>
 
+<!-- TOP CLOCK -->
+
+<div class="clock-widget">
+    <div class="clock-title">TIME AT ARRYSSA'S PLACE</div>
+    <div class="clock-time" id="clock">00:00</div>
+    <div class="clock-date" id="clockDate"></div>
+    <div class="clock-date">IST</div>
+</div>
+
+<!-- PROFILE WIDGET -->
+
+<div class="profile-widget">
+    <div class="widget-handle">
+        <img src="pfp.png" id="profilePicture" alt="Profile picture">
+    </div>
+    <p>My little corner</p>
+</div>
+
+<!-- OC MASCOT -->
+
+<div id="mascot">
+    <img src="oc.gif" alt="My OC mascot">
+    <div id="mascotCount">Clicks: 0</div>
+</div>
+
+<!-- INFO -->
+
+<div class="window" id="infoWindow">
+    <div class="window-header">
+        <span>Info</span>
+        <button onclick="closeWindow('infoWindow')">×</button>
+    </div>
+    <div class="window-content">
+        <h2>Just about me</h2>
+        <p>Hi! Arryssa here!</p>
+        <p>I'm a Roblox ranter! I talk about annoying stuff, vent, and joke around. My favourite colour is PURPLE!</p>
+        <p>Fandoms I'm In: Block Tales, A Broken Dream, Yi Xi, and the Backrooms!</p>
+        <p>I also stan ILLIT and MEOVV!</p>
+        <p>Things I Like: Dark chocolate, cats, the moon, flowers, silver, clouds, jellyfish, food, reading, writing, sketching, dancing, editing, Roblox, random crafts, and twin braids!</p>
+        <p>Stay whimsy. Stay you!</p>
+    </div>
+</div>
+
+<!-- SOCIALS -->
+
+<div class="window" id="socialWindow">
+    <div class="window-header">
+        <span>Socials</span>
+        <button onclick="closeWindow('socialWindow')">×</button>
+    </div>
+    <div class="window-content">
+        <p><a href="https://www.youtube.com/@ArryssaMoonlight" target="_blank">YouTube</a></p>
+        <p><a href="https://discord.com/users/1367008530191618139" target="_blank">Discord</a></p>
+        <p><a href="https://www.roblox.com/users/4627058434/profile" target="_blank">Roblox</a></p>
+        <p><a href="https://pin.it/5Yums5OFf" target="_blank">Pinterest</a></p>
+        <p><a href="https://www.instagram.com/arryssa_moonlight/?hl=en" target="_blank">Instagram</a></p>
+    </div>
+</div>
+
+<!-- MINIGAMES -->
+
+<div class="window" id="gamesWindow">
+    <div class="window-header">
+        <span>Minigames</span>
+        <button onclick="closeWindow('gamesWindow')">×</button>
+    </div>
+    <div class="window-content">
+        <p>Choose a game!</p>
+
+        <div class="game-card">
+            <h3>Maze</h3>
+            <a href="maze.html">Open Maze</a>
+        </div>
+
+        <div class="game-card">
+            <h3>Obby</h3>
+            <a href="obby.html">Open Obby</a>
+        </div>
+
+        <div class="game-card">
+            <h3>Catch</h3>
+            <a href="catch.html">Open Catch</a>
+        </div>
+
+        <div class="game-card">
+            <h3>Pop</h3>
+            <a href="pop.html">Open Pop</a>
+        </div>
+    </div>
+</div>
+
+<!-- MUSIC -->
+
+<div class="window" id="musicWindow">
+    <div class="window-header">
+        <span>Music Player</span>
+        <button onclick="closeWindow('musicWindow')">×</button>
+    </div>
+    <div class="window-content">
+        <p id="trackName">Track 1</p>
+        <audio id="audioPlayer" controls style="width:100%"></audio>
+        <p id="trackNumber">1 / 6</p>
+        <div id="trackButtons"></div>
+    </div>
+</div>
+
+<!-- GALLERY -->
+
+<div class="window" id="galleryWindow">
+    <div class="window-header">
+        <span>Gallery</span>
+        <button onclick="closeWindow('galleryWindow')">×</button>
+    </div>
+    <div class="window-content">
+        <p>A little collection of pictures. Click any image to view it!</p>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+</div>
+
+<!-- GALLERY IMAGE VIEWER -->
+
+<div class="gallery-viewer" id="galleryViewer" aria-label="Image gallery viewer" aria-modal="true" role="dialog">
+    <button class="gallery-close" id="galleryClose" type="button" aria-label="Close gallery">×</button>
+    <button class="gallery-arrow" id="galleryPrevious" type="button" aria-label="Previous image">‹</button>
+    <div class="gallery-viewer-image-wrap">
+        <img id="galleryLargeImage" src="" alt="Selected gallery placeholder">
+        <div class="gallery-image-count" id="galleryImageCount">1 / 10</div>
+    </div>
+    <button class="gallery-arrow" id="galleryNext" type="button" aria-label="Next image">›</button>
+</div>
+
+<!-- DO NOT ENTER PASSWORD WINDOW -->
+
+<div class="window" id="secretWindow">
+    <div class="window-header">
+        <span>DO NOT ENTER</span>
+        <button onclick="closeWindow('secretWindow')">×</button>
+    </div>
+    <div class="window-content">
+        <h2>A Little Secret</h2>
+        <p>Enter the password to continue...</p>
+        <input type="password" id="secretPassword" placeholder="Enter password">
+        <button onclick="checkPassword()">Unlock</button>
+        <p id="passwordError"></p>
+    </div>
+</div>
+
+<!-- TASKBAR -->
+
+<div class="taskbar">
+    <button onclick="openWindow('infoWindow')">Desktop</button>
+    <div class="taskbar-time" id="taskbarTime">00:00</div>
+</div>
+
 <script>
-const symbols = ["✧", "✿", "★", "♡"];
 
-/* Original decorations, unchanged */
-const sidePositions = [
-    { left: "3%", top: "160px" },
-    { left: "8%", top: "390px" },
-    { left: "3%", top: "650px" },
-    { left: "7%", top: "900px" },
-    { left: "3%", top: "1180px" },
-    { left: "8%", top: "1450px" },
+/* DECORATIONS */
 
-    { left: "95%", top: "220px" },
-    { left: "91%", top: "480px" },
-    { left: "96%", top: "740px" },
-    { left: "92%", top: "1010px" },
-    { left: "96%", top: "1280px" },
-    { left: "91%", top: "1530px" }
-];
+const decorations = document.getElementById("decorations");
+const symbols = ["♡", "⟡", "☾", "☆", "𖧋"];
 
-sidePositions.forEach((position, i) => {
-    const decoration = document.createElement("div");
+for (let i = 0; i < 38; i++) {
+    const item = document.createElement("span");
+    item.className = "floaty";
+    item.textContent = symbols[i % symbols.length];
+    item.style.left = Math.random() * 100 + "%";
+    item.style.top = Math.random() * 100 + "%";
+    item.style.fontSize = (13 + Math.random() * 23) + "px";
+    item.style.animationDelay = Math.random() * 8 + "s";
+    decorations.appendChild(item);
+}
 
-    decoration.className = "floating-symbol side-decoration";
-    decoration.textContent = symbols[i % symbols.length];
-    decoration.style.left = position.left;
-    decoration.style.top = position.top;
-    decoration.style.fontSize = (16 + (i % 3) * 4) + "px";
-    decoration.style.animationDelay = (i * 0.5) + "s";
+for (let i = 0; i < 22; i++) {
+    const star = document.createElement("span");
+    star.className = "sparkle";
+    star.textContent = "⟡";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.animationDelay = Math.random() * 3 + "s";
+    decorations.appendChild(star);
+}
 
-    document.body.appendChild(decoration);
+/* MOUSE TRAIL */
+
+let lastTrail = 0;
+
+document.addEventListener("pointermove", event => {
+    const now = Date.now();
+    if (now - lastTrail < 45) return;
+    lastTrail = now;
+
+    const trail = document.createElement("span");
+    trail.className = "trail";
+    trail.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    trail.style.left = event.clientX + "px";
+    trail.style.top = event.clientY + "px";
+
+    document.body.appendChild(trail);
+    setTimeout(() => trail.remove(), 800);
 });
 
-/* Password digits scattered separately.
-   Their order follows the secret trail. */
-const passwordClues = [
-    { digit: "1", left: "3%", top: "110px" },
-    { digit: "8", right: "3%", top: "330px" },
-    { digit: "8", left: "4%", top: "570px" },
-    { digit: "2", right: "4%", top: "820px" },
-    { digit: "0", left: "3%", top: "1080px" },
-    { digit: "1", right: "3%", top: "1350px" },
-   { digit: "4", right: "5%", top: "1630px" }
-];
+/* CLOCK */
 
-passwordClues.forEach((clue, i) => {
-    const digit = document.createElement("span");
+function updateClock() {
+    const now = new Date();
 
-    digit.className = "password-clue";
-    digit.textContent = clue.digit;
+    const time = now.toLocaleTimeString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
+    });
 
-    if (clue.left) digit.style.left = clue.left;
-    if (clue.right) digit.style.right = clue.right;
+    const date = now.toLocaleDateString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        weekday: "short",
+        day: "numeric",
+        month: "short"
+    });
 
-    digit.style.top = clue.top;
-    digit.style.animationDelay = (i * 0.4) + "s";
+    document.getElementById("clock").textContent = time;
+    document.getElementById("clockDate").textContent = date;
+    document.getElementById("taskbarTime").textContent = time;
+}
 
-    document.body.appendChild(digit);
+updateClock();
+setInterval(updateClock, 1000);
+
+/* WINDOWS */
+
+function openWindow(id) {
+    document.getElementById(id).classList.add("open");
+}
+
+function closeWindow(id) {
+    document.getElementById(id).classList.remove("open");
+}
+
+/* MASCOT CLICK COUNTER AND DRAG */
+
+const mascot = document.getElementById("mascot");
+let mascotClicks = 0;
+let mascotTimer = null;
+let mascotDrag = null;
+let mascotMoved = false;
+
+mascot.addEventListener("pointerdown", event => {
+    mascotMoved = false;
+
+    const startX = event.clientX;
+    const startY = event.clientY;
+
+    mascotTimer = setTimeout(() => {
+        const rect = mascot.getBoundingClientRect();
+
+        mascotDrag = {
+            startX,
+            startY,
+            left: rect.left,
+            top: rect.top
+        };
+
+        mascot.style.left = rect.left + "px";
+        mascot.style.top = rect.top + "px";
+
+        if (navigator.vibrate) navigator.vibrate(25);
+    }, 350);
+
+    mascot.setPointerCapture(event.pointerId);
 });
 
-/* Secret moon on the right side, near the middle */
-const moon = document.createElement("button");
-moon.className = "secret-moon side-decoration";
-moon.textContent = "☾";
-moon.setAttribute("aria-label", "Open secret");
-moon.style.right = "2%";
-moon.style.top = "50%";
+mascot.addEventListener("pointermove", event => {
+    if (!mascotDrag) return;
 
-document.body.appendChild(moon);
+    const dx = event.clientX - mascotDrag.startX;
+    const dy = event.clientY - mascotDrag.startY;
 
-/* Open and close password panel */
-moon.addEventListener("click", function() {
-    const panel = document.getElementById("password-panel");
+    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+        mascotMoved = true;
+    }
 
-    panel.style.display =
-        panel.style.display === "block" ? "none" : "block";
+    mascot.style.left = Math.max(0, Math.min(
+        window.innerWidth - mascot.offsetWidth,
+        mascotDrag.left + dx
+    )) + "px";
 
-    if (panel.style.display === "block") {
-        document.getElementById("password-input").focus();
+    mascot.style.top = Math.max(0, Math.min(
+        window.innerHeight - mascot.offsetHeight - 43,
+        mascotDrag.top + dy
+    )) + "px";
+});
+
+function stopMascotDrag() {
+    clearTimeout(mascotTimer);
+    mascotDrag = null;
+}
+
+mascot.addEventListener("pointerup", stopMascotDrag);
+mascot.addEventListener("pointercancel", stopMascotDrag);
+
+mascot.addEventListener("click", () => {
+    if (mascotMoved) {
+        mascotMoved = false;
+        return;
+    }
+
+    mascotClicks++;
+    document.getElementById("mascotCount").textContent =
+        "Clicks: " + mascotClicks;
+});
+
+/* PROFILE EASTER EGG */
+
+let profileClicks = 0;
+
+document.getElementById("profilePicture").addEventListener("click", () => {
+    profileClicks++;
+
+    if (profileClicks === 5) {
+        document.getElementById("profilePicture").style.filter =
+            "hue-rotate(100deg)";
+        alert("You found a little secret!");
+        profileClicks = 0;
     }
 });
 
-/* Password check */
+/* LONG PRESS TO MOVE PROFILE WIDGET */
+
+function makeDraggable(element, handle) {
+    let timer = null;
+    let drag = null;
+
+    handle.addEventListener("pointerdown", event => {
+        if (event.target.closest("button, input, a")) return;
+
+        const startX = event.clientX;
+        const startY = event.clientY;
+
+        timer = setTimeout(() => {
+            const rect = element.getBoundingClientRect();
+
+            drag = {
+                startX,
+                startY,
+                left: rect.left,
+                top: rect.top
+            };
+
+            element.style.left = rect.left + "px";
+            element.style.top = rect.top + "px";
+            element.style.right = "auto";
+            element.style.transform = "none";
+
+            element.classList.add("dragging");
+            if (navigator.vibrate) navigator.vibrate(25);
+        }, 350);
+
+        handle.setPointerCapture(event.pointerId);
+    });
+
+    handle.addEventListener("pointermove", event => {
+        if (!drag) return;
+
+        element.style.left = Math.max(0, Math.min(
+            window.innerWidth - element.offsetWidth,
+            drag.left + event.clientX - drag.startX
+        )) + "px";
+
+        element.style.top = Math.max(0, Math.min(
+            window.innerHeight - element.offsetHeight - 43,
+            drag.top + event.clientY - drag.startY
+        )) + "px";
+    });
+
+    function stop() {
+        clearTimeout(timer);
+        drag = null;
+        element.classList.remove("dragging");
+    }
+
+    handle.addEventListener("pointerup", stop);
+    handle.addEventListener("pointercancel", stop);
+}
+
+const profile = document.querySelector(".profile-widget");
+makeDraggable(profile, profile.querySelector(".widget-handle"));
+
+/* CLOCK WIDGET DRAGGING */
+
+const clockWidget = document.querySelector(".clock-widget");
+makeDraggable(clockWidget, clockWidget);
+
+/* WINDOW DRAGGING */
+
+document.querySelectorAll(".window").forEach(win => {
+    const handle = win.querySelector(".window-header");
+
+    handle.addEventListener("pointerdown", event => {
+        if (event.target.closest("button")) return;
+
+        const rect = win.getBoundingClientRect();
+        const startX = event.clientX;
+        const startY = event.clientY;
+
+        const move = e => {
+            win.style.left = Math.max(0, Math.min(
+                window.innerWidth - win.offsetWidth,
+                rect.left + e.clientX - startX
+            )) + "px";
+
+            win.style.top = Math.max(0, Math.min(
+                window.innerHeight - win.offsetHeight - 43,
+                rect.top + e.clientY - startY
+            )) + "px";
+        };
+
+        const stop = () => {
+            window.removeEventListener("pointermove", move);
+            window.removeEventListener("pointerup", stop);
+        };
+
+        window.addEventListener("pointermove", move);
+        window.addEventListener("pointerup", stop);
+    });
+});
+
+/* MUSIC PLAYLIST */
+
+const tracks = [
+    { name: "Track 1", src: "music/track1.mp3" },
+    { name: "Track 2", src: "music/track2.mp3" },
+    { name: "Track 3", src: "music/track3.mp3" },
+    { name: "Track 4", src: "music/track4.mp3" },
+    { name: "Track 5", src: "music/track5.mp3" },
+    { name: "Track 6", src: "music/track6.mp3" }
+];
+
+let currentTrack = 0;
+
+const audio = document.getElementById("audioPlayer");
+const trackButtons = document.getElementById("trackButtons");
+
+function loadTrack(index, autoplay = true) {
+    if (index < 0 || index >= tracks.length) return;
+
+    currentTrack = index;
+    audio.src = tracks[index].src;
+
+    document.getElementById("trackName").textContent = tracks[index].name;
+    document.getElementById("trackNumber").textContent =
+        `${index + 1} / ${tracks.length}`;
+
+    if (autoplay) {
+        audio.play().catch(() => {});
+    }
+}
+
+function changeTrack(index) {
+    loadTrack(index);
+}
+
+audio.addEventListener("ended", () => {
+    const nextTrack = (currentTrack + 1) % tracks.length;
+    loadTrack(nextTrack);
+});
+
+tracks.forEach((track, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = track.name;
+    button.addEventListener("click", () => changeTrack(index));
+    trackButtons.appendChild(button);
+});
+
+loadTrack(0, false);
+
+/* GALLERY */
+
+const galleryImages = Array.from({ length: 10 }, (_, index) => ({
+    src: `https://picsum.photos/seed/arryssa-moonlight-${index + 1}/800/800`,
+    alt: `Gallery placeholder ${index + 1}`
+}));
+
+const galleryGrid = document.getElementById("galleryGrid");
+const galleryViewer = document.getElementById("galleryViewer");
+const galleryLargeImage = document.getElementById("galleryLargeImage");
+const galleryImageCount = document.getElementById("galleryImageCount");
+let currentGalleryImage = 0;
+
+galleryImages.forEach((image, index) => {
+    const thumbnail = document.createElement("img");
+    thumbnail.src = image.src;
+    thumbnail.alt = image.alt;
+    thumbnail.className = "gallery-thumb";
+    thumbnail.loading = "lazy";
+    thumbnail.addEventListener("click", () => openGallery(index));
+    galleryGrid.appendChild(thumbnail);
+});
+
+function updateGalleryImage() {
+    const image = galleryImages[currentGalleryImage];
+    galleryLargeImage.src = image.src;
+    galleryLargeImage.alt = image.alt;
+    galleryImageCount.textContent =
+        `${currentGalleryImage + 1} / ${galleryImages.length}`;
+}
+
+function openGallery(index) {
+    currentGalleryImage = index;
+    updateGalleryImage();
+    galleryViewer.classList.add("open");
+}
+
+function closeGallery() {
+    galleryViewer.classList.remove("open");
+}
+
+function changeGalleryImage(direction) {
+    currentGalleryImage =
+        (currentGalleryImage + direction + galleryImages.length) % galleryImages.length;
+    updateGalleryImage();
+}
+
+document.getElementById("galleryPrevious").addEventListener("click", () => {
+    changeGalleryImage(-1);
+});
+
+document.getElementById("galleryNext").addEventListener("click", () => {
+    changeGalleryImage(1);
+});
+
+document.getElementById("galleryClose").addEventListener("click", closeGallery);
+
+galleryViewer.addEventListener("click", event => {
+    if (event.target === galleryViewer) closeGallery();
+});
+
+document.addEventListener("keydown", event => {
+    if (!galleryViewer.classList.contains("open")) return;
+
+    if (event.key === "Escape") closeGallery();
+    if (event.key === "ArrowLeft") changeGalleryImage(-1);
+    if (event.key === "ArrowRight") changeGalleryImage(1);
+});
+
+/* SECRET PAGE */
+
 function checkPassword() {
-    const password = document.getElementById("password-input").value;
-    const error = document.getElementById("error-message");
+    const password = document.getElementById("secretPassword").value;
+    const error = document.getElementById("passwordError");
 
     if (password === "1882014") {
         window.location.href = "yes.html";
     } else {
-        error.textContent = "Nope! Try again ✧";
+        error.textContent = "Nope! Try again.";
     }
 }
-</script>
 
+document.getElementById("secretPassword").addEventListener("keydown", event => {
+    if (event.key === "Enter") checkPassword();
+});
+
+</script>
 </body>
 </html>
